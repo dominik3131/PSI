@@ -20,7 +20,7 @@ def select_genes(genes):
         roulette.append(prob(genes[i],sum))
         roulette[i]+=roulette[i-1]
     selected_genes=[]
-    for i in range(0,len(genes)):
+    for i in range(0,pool_size):
         selected_genes.append(genes[choose(roulette)])
     return selected_genes
 def cross_genes(genes):
@@ -64,17 +64,19 @@ def choose(roulette):
     return index
     
     
-all_genes=[]
+temp_genes=[]
 for i in range(1,128):
-    all_genes.append(i)
+   temp_genes.append(i)
+all_genes=[]
+for i in range(0,127):
+    all_genes.append("{:08b}".format(temp_genes.pop(0)))
 genes=[]
-for i in range(0,pool_size):
-    genes.append("{:08b}".format(all_genes.pop(random.randint(0, len(all_genes)))))
-
-for i in range(0,1000):
-    genes=select_genes(genes)
+for i in range(0,50):
+    genes=select_genes(all_genes)
+    all_genes = [x for x in all_genes if x not in genes]
     genes=cross_genes(genes)
     genes=mutate_genes(genes)
+    all_genes.extend(genes)
 print(genes)
 
 
