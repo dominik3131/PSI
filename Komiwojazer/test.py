@@ -3,6 +3,7 @@ from state import *
 import copy
 import itertools
 import time
+from operator import attrgetter
 
 
 class Test:
@@ -24,7 +25,7 @@ class Test:
 
     def load_towns(self):
         lista = list()
-        filepath = 'towns.txt'
+        filepath = 'Komiwojazer/towns.txt'
         with open(filepath) as fp:
             for cnt, line in enumerate(fp):
                 splitted = line.split()
@@ -90,14 +91,7 @@ class Test:
         return states
 
     def find_with_best_heuristic(self, states):
-        best_state = states[0]
-        best_heuristic = best_state.heuristic
-        for state in states:
-            temp_heuristic = state.heuristic
-            if temp_heuristic < best_heuristic:
-                best_heuristic = temp_heuristic
-                best_state = state
-        return best_state
+        return min(states,key=attrgetter('heuristic'))
 
 
 if __name__ == '__main__':

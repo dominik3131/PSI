@@ -1,6 +1,7 @@
 import random
 pool_size=10
 mutation_prob=0.2
+cross_prob=0.8
 def marking_function(x):
     value=int(x, 2)
     return 2*(value*value+1)
@@ -26,9 +27,13 @@ def cross_genes(genes):
     random.shuffle(genes)
     crossed_genes=[]
     for i in range(0,len(genes),2):
-        locus=random.randint(0,len(genes[0]))
-        crossed_genes.append(cross(genes[i+1],genes[i],locus))
-        crossed_genes.append(cross(genes[i],genes[i+1],locus))
+        if random.random()<cross_prob:
+            locus=random.randint(0,len(genes[0]))
+            crossed_genes.append(cross(genes[i+1],genes[i],locus))
+            crossed_genes.append(cross(genes[i],genes[i+1],locus))
+        else:
+            crossed_genes.append(genes[i])
+            crossed_genes.append(genes[i+1])
     return crossed_genes
         
 def cross(gene1,gene2,locus):

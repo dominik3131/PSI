@@ -28,7 +28,7 @@ class State:
                     dist = last_town.distance(x)
                     if dist < temp:
                         temp = dist
-            self.heuristic = self.distance + temp * multiplier * 0.95
+            self.heuristic = self.distance + temp * multiplier * 0.97
         return self.heuristic
 
     def __repr__(self):
